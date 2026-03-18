@@ -465,8 +465,18 @@ toggleUnitBtn.addEventListener("click", () => {
 function handleCitySearch() {
   fetchWeatherByCity(cityInput.value);
 }
+function handleLocationSuccess(position) {
+  const { latitude, longitude } = position.coords;
+  fetchWeatherByCoords(latitude, longitude);
+}
+
+function handleLocationError() {
+  showToast("Location access denied");
+  showError("Unable to access your current location");
+}
 
   // Event Listeners
+
 searchBtn.addEventListener("click", handleCitySearch);
 
 cityInput.addEventListener("keydown", (e) => {
@@ -482,14 +492,8 @@ currentLocationBtn.addEventListener("click", () => {
   }
 
   navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const { latitude, longitude } = position.coords;
-      fetchWeatherByCoords(latitude, longitude);
-    },
-    () => {
-      showToast("Location access denied");
-      showError("Unable to access your current location");
-    }
+    handleLocationSuccess,
+    handleLocationError
   );
 });
 
