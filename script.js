@@ -382,6 +382,13 @@ function handleWeatherSuccess(current, forecast) {
     //showToast(`Weather loaded for ${current.name}`);
   }
 }
+function handleWeatherError(message) {
+  hideWeatherSections();
+  showEmptyState();
+  showError(message);
+  showToast(message);
+}
+
      // API Calls
 
   async function fetchCurrentWeatherByCity(city) {
@@ -420,10 +427,7 @@ async function fetchWeatherByCity(city) {
     handleWeatherSuccess(current, forecast);
     //showToast(`Weather loaded for ${current.name}`);
   } catch (error) {
-    hideWeatherSections();
-    showEmptyState();
-    showError(error.message);
-    showToast(error.message);
+    handleWeatherError(error.message);
   } finally {
     hideLoading();
   }
@@ -438,10 +442,7 @@ async function fetchWeatherByCoords(lat, lon) {
     ]);
    handleWeatherSuccess(current, forecast);
   } catch (error) {
-    hideWeatherSections();
-    showEmptyState();
-    showError(error.message);
-    showToast("Could not fetch current location weather");
+     handleWeatherError("Could not fetch current location weather");
   } finally {
     hideLoading();
   }
