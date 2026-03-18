@@ -462,15 +462,16 @@ toggleUnitBtn.addEventListener("click", () => {
   rerenderFromStoredData();
 });
 
-  // Event Listeners
-
-searchBtn.addEventListener("click", () => {
+function handleCitySearch() {
   fetchWeatherByCity(cityInput.value);
-});
+}
+
+  // Event Listeners
+searchBtn.addEventListener("click", handleCitySearch);
 
 cityInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
-    fetchWeatherByCity(cityInput.value);
+    handleCitySearch();
   }
 });
 
