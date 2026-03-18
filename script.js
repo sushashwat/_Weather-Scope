@@ -372,7 +372,16 @@ async function fetchWeatherData(url, errorMessage) {
 
   return data;
 }
+function handleWeatherSuccess(current, forecast) {
+  const combinedData = { current, forecast };
 
+  renderWeatherUI(combinedData);
+
+  if (current && current.name) {
+    saveRecentSearch(current.name);
+    //showToast(`Weather loaded for ${current.name}`);
+  }
+}
      // API Calls
 
   async function fetchCurrentWeatherByCity(city) {
@@ -408,13 +417,7 @@ async function fetchWeatherByCity(city) {
       fetchCurrentWeatherByCity(trimmedCity),
       fetchForecastByCity(trimmedCity)
     ]);
-
-    const combinedData = { current, forecast };
-
-    renderWeatherUI(combinedData);
-    if (current && current.name) {
-      saveRecentSearch(current.name);
-    }
+    handleWeatherSuccess(current, forecast);
     //showToast(`Weather loaded for ${current.name}`);
   } catch (error) {
     hideWeatherSections();
@@ -433,12 +436,7 @@ async function fetchWeatherByCoords(lat, lon) {
       fetchCurrentWeatherByCoords(lat, lon),
       fetchForecastByCoords(lat, lon)
     ]);
-
-    const combinedData = { current, forecast };
-
-    renderWeatherUI(combinedData);
-    saveRecentSearch(current.name);
-    showToast(`Weather loaded for ${current.name}`);
+   handleWeatherSuccess(current, forecast);
   } catch (error) {
     hideWeatherSections();
     showEmptyState();
