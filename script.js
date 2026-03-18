@@ -32,6 +32,8 @@ const currentVisibility = document.getElementById("currentVisibility");
 const feelsLike = document.getElementById("feelsLike");
 const sunriseTime = document.getElementById("sunriseTime");
 const sunsetTime = document.getElementById("sunsetTime");
+const skeletonLoader = document.getElementById("skeletonLoader");
+const weatherData = document.getElementById("weatherData");
 
 const toast = document.getElementById("toast");
 
