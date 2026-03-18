@@ -40,9 +40,9 @@ const toast = document.getElementById("toast");
 let isCelsius = true;
 let lastWeatherData = null;
 
-  // Helper Functions
+// Helper Functions
 
-  function prepareWeatherUI() {
+function prepareWeatherUI() {
   hideError();
   hideAlert();
   showLoading();
@@ -189,7 +189,7 @@ function setDynamicBackground(conditionText) {
   }
 }
 
-       //Recent Searches
+//Recent Searches
 
 function getRecentSearches() {
   return JSON.parse(localStorage.getItem("weatherRecentSearches")) || [];
@@ -226,15 +226,18 @@ function renderRecentSearches() {
     button.textContent = city;
 
     button.addEventListener("click", () => {
-      cityInput.value = city;
-      fetchWeatherByCity(city);
+      handleRecentSearchClick(city);
     });
 
     recentList.appendChild(button);
   });
 }
+function handleRecentSearchClick(city) {
+  cityInput.value = city;
+  fetchWeatherByCity(city);
+}
 
-  // Alerts
+// Alerts
 
 function handleWeatherAlert(weatherData) {
   hideAlert();
@@ -253,7 +256,7 @@ function handleWeatherAlert(weatherData) {
   }
 }
 
-   //Forecast grouping
+//Forecast grouping
 
 function getDailyForecasts(forecastList) {
   const dailyMap = new Map();
@@ -294,7 +297,7 @@ function getDailyForecasts(forecastList) {
   return dailyArray.slice(0, 6);
 }
 
-  // Render Weather
+// Render Weather
 
 function renderCurrentWeather(data) {
   const weatherData = data.current;
@@ -389,9 +392,9 @@ function handleWeatherError(message) {
   showToast(message);
 }
 
-     // API Calls
+// API Calls
 
-  async function fetchCurrentWeatherByCity(city) {
+async function fetchCurrentWeatherByCity(city) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`;
   return fetchWeatherData(url, "Unable to fetch current weather");
 }
@@ -409,7 +412,7 @@ async function fetchCurrentWeatherByCoords(lat, lon) {
 async function fetchForecastByCoords(lat, lon) {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
   return fetchWeatherData(url, "Unable to fetch forecast");
-} 
+}
 async function fetchWeatherByCity(city) {
   const trimmedCity = city.trim();
 
@@ -419,7 +422,7 @@ async function fetchWeatherByCity(city) {
   }
 
   try {
-   prepareWeatherUI();
+    prepareWeatherUI();
     const [current, forecast] = await Promise.all([
       fetchCurrentWeatherByCity(trimmedCity),
       fetchForecastByCity(trimmedCity)
@@ -435,20 +438,20 @@ async function fetchWeatherByCity(city) {
 
 async function fetchWeatherByCoords(lat, lon) {
   try {
-   prepareWeatherUI();
+    prepareWeatherUI();
     const [current, forecast] = await Promise.all([
       fetchCurrentWeatherByCoords(lat, lon),
       fetchForecastByCoords(lat, lon)
     ]);
-   handleWeatherSuccess(current, forecast);
+    handleWeatherSuccess(current, forecast);
   } catch (error) {
-     handleWeatherError("Could not fetch current location weather");
+    handleWeatherError("Could not fetch current location weather");
   } finally {
     hideLoading();
   }
 }
 
-   //Toggle Unit
+//Toggle Unit
 
 function rerenderFromStoredData() {
   if (!lastWeatherData) return;
@@ -475,7 +478,7 @@ function handleLocationError() {
   showError("Unable to access your current location");
 }
 
-  // Event Listeners
+// Event Listeners
 
 searchBtn.addEventListener("click", handleCitySearch);
 
