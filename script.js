@@ -458,12 +458,13 @@ function rerenderFromStoredData() {
   renderCurrentWeather(lastWeatherData);
   renderForecast(lastWeatherData);
 }
-
-toggleUnitBtn.addEventListener("click", () => {
+function handleUnitToggle() {
   isCelsius = !isCelsius;
   toggleUnitBtn.textContent = isCelsius ? "°C" : "°F";
   rerenderFromStoredData();
-});
+}
+
+toggleUnitBtn.addEventListener("click", handleUnitToggle);
 
 function handleCitySearch() {
   fetchWeatherByCity(cityInput.value);
