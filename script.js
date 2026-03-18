@@ -38,9 +38,7 @@ const toast = document.getElementById("toast");
 let isCelsius = true;
 let lastWeatherData = null;
 
-/* =========================
-   Helper Functions
-========================= */
+  // Helper Functions
 
 function showToast(message) {
   toast.textContent = message;
@@ -184,9 +182,7 @@ function setDynamicBackground(conditionText) {
   }
 }
 
-/* =========================
-   Recent Searches
-========================= */
+       //Recent Searches
 
 function getRecentSearches() {
   return JSON.parse(localStorage.getItem("weatherRecentSearches")) || [];
@@ -231,9 +227,7 @@ function renderRecentSearches() {
   });
 }
 
-/* =========================
-   Alerts
-========================= */
+  // Alerts
 
 function handleWeatherAlert(weatherData) {
   hideAlert();
@@ -252,9 +246,7 @@ function handleWeatherAlert(weatherData) {
   }
 }
 
-/* =========================
-   Forecast grouping
-========================= */
+   //Forecast grouping
 
 function getDailyForecasts(forecastList) {
   const dailyMap = new Map();
@@ -295,9 +287,7 @@ function getDailyForecasts(forecastList) {
   return dailyArray.slice(0, 6);
 }
 
-/* =========================
-   Render Weather
-========================= */
+  // Render Weather
 
 function renderCurrentWeather(data) {
   const weatherData = data.current;
@@ -366,9 +356,7 @@ function renderWeatherUI(data) {
   renderForecast(data);
 }
 
-/* =========================
-   API Calls
-========================= */
+  // API Calls
 
 async function fetchCurrentWeatherByCity(city) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`;
@@ -453,7 +441,6 @@ async function fetchWeatherByCity(city) {
   }
 }
 
-
 async function fetchWeatherByCoords(lat, lon) {
   try {
     hideError();
@@ -480,9 +467,7 @@ async function fetchWeatherByCoords(lat, lon) {
   }
 }
 
-/* =========================
-   Toggle Unit
-========================= */
+   //Toggle Unit
 
 function rerenderFromStoredData() {
   if (!lastWeatherData) return;
@@ -496,9 +481,7 @@ toggleUnitBtn.addEventListener("click", () => {
   rerenderFromStoredData();
 });
 
-/* =========================
-   Event Listeners
-========================= */
+  // Event Listeners
 
 searchBtn.addEventListener("click", () => {
   fetchWeatherByCity(cityInput.value);

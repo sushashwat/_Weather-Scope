@@ -191,7 +191,7 @@ button:hover::before,
   box-shadow:
     0 15px 35px rgba(0,0,0,0.20),
     inset 0 1px 0 rgba(255,255,255,0.08);
-  transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, background- 0.35s ease;
   animation: fadeUp 0.7s ease;
 }
 
