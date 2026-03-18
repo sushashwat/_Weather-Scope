@@ -42,6 +42,11 @@ let lastWeatherData = null;
 
   // Helper Functions
 
+  function prepareWeatherUI() {
+  hideError();
+  hideAlert();
+  showLoading();
+}
 function showToast(message) {
   toast.textContent = message;
   toast.classList.remove("translate-x-[120%]");
@@ -398,10 +403,7 @@ async function fetchWeatherByCity(city) {
   }
 
   try {
-    hideError();
-    hideAlert();
-    showLoading();
-
+   prepareWeatherUI();
     const [current, forecast] = await Promise.all([
       fetchCurrentWeatherByCity(trimmedCity),
       fetchForecastByCity(trimmedCity)
@@ -426,10 +428,7 @@ async function fetchWeatherByCity(city) {
 
 async function fetchWeatherByCoords(lat, lon) {
   try {
-    hideError();
-    hideAlert();
-    showLoading();
-
+   prepareWeatherUI();
     const [current, forecast] = await Promise.all([
       fetchCurrentWeatherByCoords(lat, lon),
       fetchForecastByCoords(lat, lon)
