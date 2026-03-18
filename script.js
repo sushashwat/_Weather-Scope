@@ -357,57 +357,38 @@ function renderWeatherUI(data) {
   renderCurrentWeather(data);
   renderForecast(data);
 }
-
-  // API Calls
-
-async function fetchCurrentWeatherByCity(city) {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`;
+async function fetchWeatherData(url, errorMessage) {
   const response = await fetch(url);
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Unable to fetch current weather");
+    throw new Error(data.message || errorMessage);
   }
 
   return data;
+}
+
+     // API Calls
+
+  async function fetchCurrentWeatherByCity(city) {
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`;
+  return fetchWeatherData(url, "Unable to fetch current weather");
 }
 
 async function fetchForecastByCity(city) {
   const url = `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`;
-  const response = await fetch(url);
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Unable to fetch forecast");
-  }
-
-  return data;
+  return fetchWeatherData(url, "Unable to fetch forecast");
 }
 
 async function fetchCurrentWeatherByCoords(lat, lon) {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-  const response = await fetch(url);
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Unable to fetch current weather");
-  }
-
-  return data;
+  return fetchWeatherData(url, "Unable to fetch current weather");
 }
 
 async function fetchForecastByCoords(lat, lon) {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-  const response = await fetch(url);
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Unable to fetch forecast");
-  }
-
-  return data;
-}
-
+  return fetchWeatherData(url, "Unable to fetch forecast");
+} 
 async function fetchWeatherByCity(city) {
   const trimmedCity = city.trim();
 
@@ -432,7 +413,7 @@ async function fetchWeatherByCity(city) {
     if (current && current.name) {
       saveRecentSearch(current.name);
     }
-    showToast(`Weather loaded for ${current.name}`);
+    //showToast(`Weather loaded for ${current.name}`);
   } catch (error) {
     hideWeatherSections();
     showEmptyState();
